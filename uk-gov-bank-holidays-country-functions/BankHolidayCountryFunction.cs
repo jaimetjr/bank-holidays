@@ -17,7 +17,8 @@ namespace uk_gov_bank_holidays_country_functions
     {
         [FunctionName("GetCountrys")]
         public static async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Function, "get", Route = null)] ILogger log)
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = null)] HttpRequest req,
+            ILogger log)
         {
             try
             {

@@ -16,7 +16,7 @@ namespace uk_gov_bank_holidays_function
     {
         [FunctionName("GetBankHolidayByRegionAndDate")]
         public static async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequest req,
+            [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)] HttpRequest req,
             ILogger log)
         {
             log.LogInformation("Start Method");

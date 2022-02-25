@@ -1,3 +1,5 @@
+using bank_holidays_api.Config;
+using bank_holidays_api.Services.BankHolidayService;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -26,8 +28,12 @@ namespace bank_holidays_api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddControllers();
+
+            var section = Configuration.GetSection("AppSettings");
+
+            services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
+            services.AddScoped<IBankHolidayService, BankHolidayService>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "bank_holidays_api", Version = "v1" });
