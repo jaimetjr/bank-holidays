@@ -1,4 +1,5 @@
-﻿using bank_holidays_api.Services.BankHolidayService;
+﻿using bank_holidays_api.Models;
+using bank_holidays_api.Services.BankHolidayService;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -18,8 +19,19 @@ namespace bank_holidays_api.Controllers
         [HttpGet("GetCountrys")]
         public async Task<IActionResult> GetCountrys()
         {
-            var countrys = await _service.GetCountrys();
-            return Ok(countrys);
+            var serviceResponse = await _service.GetCountrys();
+            if (serviceResponse.Success)
+                return Ok(serviceResponse.Data);
+            return BadRequest(serviceResponse.Message);
+        }
+
+        [HttpPost("GetBankHolidayByRegionAndDate")]
+        public async Task<IActionResult> GetBankHolidayByRegionAndDate([FromBody] SearchModel model)
+        {
+            var serviceResponse = await _service.GetBankHolidayByRegionAndDate(model);
+            if (serviceResponse.Success)
+                return Ok(serviceResponse.Data);
+            return BadRequest(serviceResponse.Message);
         }
     }
 }
