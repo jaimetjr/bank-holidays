@@ -23,7 +23,7 @@ namespace uk_gov_bank_holidays_country_functions
             try
             {
                 log.LogInformation("Start Process: GetCountrys");
-                string url = "https://www.gov.uk/bank-holidays.json";
+                string url = Environment.GetEnvironmentVariable("UkGovBankHolidayUrl");
 
                 using var client = new HttpClient();
                 using var request = new HttpRequestMessage(HttpMethod.Get, url);
