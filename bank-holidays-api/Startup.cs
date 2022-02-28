@@ -29,29 +29,34 @@ namespace bank_holidays_api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-
-            var section = Configuration.GetSection("AppSettings");
-
             services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
+            services.AddCors(c => c.AddPolicy("DefaultPolicy", builder =>
+            {
+                builder.WithOrigins("http://localhost:4200")
+                    .AllowAnyOrigin()
+                    .AllowAnyHeader()
+                    .AllowAnyMethod();
+            }));
+
             services.AddScoped<IBankHolidayService, BankHolidayService>();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "bank_holidays_api", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Bank Holidays API", Version = "v1" });
             });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
+            //if (env.IsDevelopment())
+            //{
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "bank_holidays_api v1"));
-            }
+            //}
 
             app.UseHttpsRedirection();
-
+            app.UseCors("DefaultPolicy");
             app.UseRouting();
 
             app.UseAuthorization();

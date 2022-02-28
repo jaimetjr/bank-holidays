@@ -1,3 +1,14 @@
-<div>
-    search grid component
+<div *ngIf="dates">
+    <br>
+    <div class="search-grid" *ngFor="let date of dates">
+        <div class="search-item">
+            {{ customFormatDate(date.date) }}
+        </div>
+        <div class="search-item">
+            {{ date.holiday}}
+        </div>
+        <div class="search-item">
+            {{ setDayOfWeek(date.dayOfWeek) }}
+        </div>
+    </div>
 </div>

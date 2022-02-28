@@ -1,3 +1,13 @@
-header {
-    border: 1px dotted green;
+.header {
+    height: 10%;
+    padding: 2% 0%;
+    background-color: black;
+}
+
+.header-text {
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: right;
+    padding-right: 5%;
+    color: white;
+    font-size: 20pt;
 }

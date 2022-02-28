@@ -1,3 +1,28 @@
-<div>
-    search component
+<bh-error-message [error]="error"></bh-error-message>
+<div class="search">
+    <div class="search-item">
+        Region: 
+    </div>
+    <div class="search-item">
+        <select id="searchModel.region" [(ngModel)]="searchModel.region">
+            <option value=""></option>
+            <option *ngFor="let country of countrys; let i = index" [value]="countrys[i]">
+                {{ countrys[i] }}
+            </option>
+        </select>
+    </div>
+    <div class="search-item">
+        Date: 
+    </div>
+    <div class="search-item">
+        <input type="date" id="searchModel.date" [(ngModel)]="searchModel.date">
+    </div>
+
+    <div class="search-item">
+        <button class="search-button" (click)="getDates()">
+            Search
+        </button>
+    </div>
 </div>
+
+<bh-search-grid [dates]="dates"></bh-search-grid>

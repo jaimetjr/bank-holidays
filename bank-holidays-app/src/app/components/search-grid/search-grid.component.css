@@ -1,0 +1,12 @@
+.search-grid {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.search-item {
+    width: 20%;
+    border: 1px solid black;
+    padding: 5px;
+    text-align: center;
+}

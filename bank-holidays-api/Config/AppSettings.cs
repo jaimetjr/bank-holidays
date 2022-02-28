@@ -4,6 +4,7 @@
     {
         public string AzureFunctionGetCountryUrl { get; set; }
         public string AzureFunctionBankHolidayUrl { get; set; }
+        public string UrlAppSite { get; set; }
 
     }
 }
