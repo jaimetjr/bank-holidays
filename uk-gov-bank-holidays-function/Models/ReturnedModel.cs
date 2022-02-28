@@ -9,5 +9,6 @@ namespace uk_gov_bank_holidays_function.Models
         public DateTime Date { get; set; }
         public string Holiday { get; set; }
         public DayOfWeek DayOfWeek { get; set; }
+        public bool IsSearchedDay { get; set; } = false;
     }
 }

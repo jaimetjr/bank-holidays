@@ -61,29 +61,160 @@ namespace uk_gov_bank_holidays_function
             switch (request.Region.ToLower())
             {
                 case "scotland":
-                    return root.Scotland.Events.Select(x => new ReturnedModel
-                    {
-                        Date = x.Date,
-                        DayOfWeek = x.Date.DayOfWeek,
-                        Holiday = x.Title
-                    }).ToList();
+                    return ScotlandModel(request, root);
                 case "northern-ireland":
-                    return root.NorthernIreland.Events.Select(x => new ReturnedModel
-                    {
-                        Date = x.Date,
-                        DayOfWeek = x.Date.DayOfWeek,
-                        Holiday = x.Title
-                    }).ToList();
+                    return NorthernIrelandModel(request, root);
                 case "england-and-wales":
-                    return root.EnglandAndWales.Events.Select(x => new ReturnedModel
-                    {
-                        Date = x.Date,
-                        DayOfWeek = x.Date.DayOfWeek,
-                        Holiday = x.Title
-                    }).ToList();
+                    return EnglandAndWalesModel(request, root);
                 default:
                     return new List<ReturnedModel>();
             }
+        }
+
+        private static List<ReturnedModel> ScotlandModel(RequestBody request, Root root)
+        {
+            var returnedModels = new List<ReturnedModel>();
+
+            var events = root.Scotland
+                                     .Events
+                                     .Where(x => x.Date.Year == request.Date.Year)
+                                     .OrderBy(x => x.Date)
+                                     .ToList();
+            int beforeCount = 0;
+            int afterCount = 0;
+
+            returnedModels.Add(new ReturnedModel
+            {
+                Date = request.Date,
+                DayOfWeek = request.Date.DayOfWeek,
+                Holiday = "[Searched date]",
+                IsSearchedDay = true
+            });
+
+            for (int i = 0; i < events.Count(); i++)
+            {
+                if (events[i].Date < request.Date && beforeCount < 2)
+                {
+                    returnedModels.Add(new ReturnedModel
+                    {
+                        Date = events[i].Date,
+                        DayOfWeek = events[i].Date.DayOfWeek,
+                        Holiday = events[i].Title
+                    });
+                    beforeCount++;
+                    continue;
+                }
+
+                if (events[i].Date > request.Date && afterCount < 2)
+                {
+                    returnedModels.Add(new ReturnedModel
+                    {
+                        Date = events[i].Date,
+                        DayOfWeek = events[i].Date.DayOfWeek,
+                        Holiday = events[i].Title
+                    });
+                    afterCount++;
+                    continue;
+                }
+            }
+            return returnedModels;
+        }
+
+        private static List<ReturnedModel> NorthernIrelandModel(RequestBody request, Root root)
+        {
+            var returnedModels = new List<ReturnedModel>();
+
+            var events = root.NorthernIreland
+                                     .Events
+                                     .Where(x => x.Date.Year == request.Date.Year)
+                                     .OrderBy(x => x.Date)
+                                     .ToList();
+
+            int beforeCount = 0;
+            int afterCount = 0;
+            returnedModels.Add(new ReturnedModel
+            {
+                Date = request.Date,
+                DayOfWeek = request.Date.DayOfWeek,
+                Holiday = "[Searched date]",
+                IsSearchedDay = true
+            });
+
+            for (int i = 0; i < events.Count(); i++)
+            {
+                if (events[i].Date < request.Date && beforeCount < 2)
+                {
+                    returnedModels.Add(new ReturnedModel
+                    {
+                        Date = events[i].Date,
+                        DayOfWeek = events[i].Date.DayOfWeek,
+                        Holiday = events[i].Title
+                    });
+                    beforeCount++;
+                    continue;
+                }
+
+                if (events[i].Date > request.Date && afterCount < 2)
+                {
+                    returnedModels.Add(new ReturnedModel
+                    {
+                        Date = events[i].Date,
+                        DayOfWeek = events[i].Date.DayOfWeek,
+                        Holiday = events[i].Title
+                    });
+                    afterCount++;
+                    continue;
+                }
+            }
+            return returnedModels;
+        }
+
+        private static List<ReturnedModel> EnglandAndWalesModel(RequestBody request, Root root)
+        {
+            var returnedModels = new List<ReturnedModel>();
+
+            var events = root.EnglandAndWales
+                                     .Events
+                                     .Where(x => x.Date.Year == request.Date.Year)
+                                     .ToList();
+
+            int beforeCount = 0;
+            int afterCount = 0;
+            returnedModels.Add(new ReturnedModel
+            {
+                Date = request.Date,
+                DayOfWeek = request.Date.DayOfWeek,
+                Holiday = "[Searched date]",
+                IsSearchedDay = true
+            });
+
+            for (int i = 0; i < events.Count(); i++)
+            {
+                if (events[i].Date < request.Date && beforeCount < 2)
+                {
+                    returnedModels.Add(new ReturnedModel
+                    {
+                        Date = events[i].Date,
+                        DayOfWeek = events[i].Date.DayOfWeek,
+                        Holiday = events[i].Title
+                    });
+                    beforeCount++;
+                    continue;
+                }
+
+                if (events[i].Date > request.Date && afterCount < 2)
+                {
+                    returnedModels.Add(new ReturnedModel
+                    {
+                        Date = events[i].Date,
+                        DayOfWeek = events[i].Date.DayOfWeek,
+                        Holiday = events[i].Title
+                    });
+                    afterCount++;
+                    continue;
+                }
+            }
+            return returnedModels;
         }
     }
 }

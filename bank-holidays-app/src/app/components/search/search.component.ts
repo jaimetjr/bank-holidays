@@ -38,7 +38,10 @@ export class SearchComponent implements OnInit {
                 .getDates(this.searchModel)
                 .subscribe({
                     next: (dates : DatesModel[]) => {
-                        this.dates = dates;
+                        this.dates = dates.sort((a , b) => {
+                            return <any>new Date(a.date) - <any>new Date(b.date);
+                        });
+                        console.log(this.dates);
                     },
                     error: (err) => {
                         this.error = err;

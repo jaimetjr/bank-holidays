@@ -1,13 +1,23 @@
 <div *ngIf="dates">
     <br>
     <div class="search-grid" *ngFor="let date of dates">
-        <div class="search-item">
+        <div class="search-item-bold" *ngIf="date.isSearchedDay">
             {{ customFormatDate(date.date) }}
         </div>
-        <div class="search-item">
+        <div class="search-item-bold" *ngIf="date.isSearchedDay">
             {{ date.holiday}}
         </div>
-        <div class="search-item">
+        <div class="search-item-bold" *ngIf="date.isSearchedDay">
+            {{ setDayOfWeek(date.dayOfWeek) }}
+        </div>
+
+        <div class="search-item" *ngIf="!date.isSearchedDay">
+            {{ customFormatDate(date.date) }}
+        </div>
+        <div class="search-item" *ngIf="!date.isSearchedDay">
+            {{ date.holiday}}
+        </div>
+        <div class="search-item" *ngIf="!date.isSearchedDay">
             {{ setDayOfWeek(date.dayOfWeek) }}
         </div>
     </div>

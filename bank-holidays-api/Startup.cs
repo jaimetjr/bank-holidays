@@ -32,7 +32,7 @@ namespace bank_holidays_api
             services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
             services.AddCors(c => c.AddPolicy("DefaultPolicy", builder =>
             {
-                builder.WithOrigins("http://localhost:4200")
+                builder.WithOrigins("https://bank-holiday-app.azurewebsites.net")
                     .AllowAnyOrigin()
                     .AllowAnyHeader()
                     .AllowAnyMethod();

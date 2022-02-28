@@ -11,5 +11,8 @@ namespace bank_holidays_api.Models
         public string Holiday { get; set; }
         [JsonPropertyName("dayOfWeek")]
         public DayOfWeek DayOfWeek { get; set; }
+
+        [JsonPropertyName("isSearchedDay")]
+        public bool IsSearchedDay { get; set; } = false;
     }
 }
